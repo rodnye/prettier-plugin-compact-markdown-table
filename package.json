@@ -1,6 +1,6 @@
 {
   "name": "prettier-plugin-compact-markdown-table",
-  "version": "0.1.0",
+  "version": "0.1.0-rodny",
   "description": "Prettier plugin for compact markdown tables without cell padding or alignment",
   "type": "module",
   "exports": "./src/index.js",
