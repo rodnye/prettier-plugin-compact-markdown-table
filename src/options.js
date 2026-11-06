@@ -6,6 +6,7 @@ const options = {
         description: "Table formatting style.",
         choices: [
             { value: "compact", description: "No cell padding, minimal separators." },
+            { value: "compact-delimiter", description: "Compact only the header delimiter row; keep cells aligned." },
             { value: "aligned", description: "Pad cells to align columns (Prettier default)." },
         ],
     },

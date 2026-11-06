@@ -20,6 +20,29 @@ function printCompactTable(path, options, print) {
     return [breakParent, join(hardlineWithoutBreakParent, rows)];
 }
 
+function printCompactDelimiterTable(path, options, print, originalPrinter) {
+    const originalDoc = originalPrinter.print(path, options, print);
+    const formatted = printDocToString(originalDoc, options).formatted.replace(/\n+$/, "");
+    const lines = formatted.split("\n");
+
+    const separatorIndex = lines.findIndex(
+        (line, index) =>
+            index > 0 &&
+            line.includes("-") &&
+            line.includes("|") &&
+            /^\s*\|?[\s:|-]+\|?\s*$/.test(line),
+    );
+
+    if (separatorIndex === -1) {
+        return originalDoc;
+    }
+
+    const headerLength = path.node.children[0]?.children.length ?? 0;
+    lines[separatorIndex] = printCompactSeparatorLine(path.node, options, headerLength);
+
+    return [breakParent, lines.join("\n")];
+}
+
 function printSeparator(node, options, headerLength) {
     return node.align
         .map((align, index) => {
@@ -33,4 +56,8 @@ function printSeparator(node, options, headerLength) {
         .filter(Boolean);
 }
 
-export { printCompactTable };
+function printCompactSeparatorLine(node, options, headerLength) {
+    return `|${printSeparator(node, options, headerLength).join("|")}|`;
+}
+
+export { printCompactTable, printCompactDelimiterTable };
