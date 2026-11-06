@@ -65,6 +65,7 @@ After:
 |Value|Description|
 |-|-|
 |`"compact"` (default)|No cell padding, minimal separators.|
+|`"compact-delimiter"`|Compact only the header delimiter row; keep cells aligned.|
 |`"aligned"`|Pad cells to align columns (Prettier default).|
 
 Set in `.prettierrc`:
