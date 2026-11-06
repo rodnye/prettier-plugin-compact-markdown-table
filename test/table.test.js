@@ -38,6 +38,32 @@ test("aligned table preserves Prettier default", async () => {
   expect(await format(input, { tableLayout: "aligned" })).toBe(expected);
 });
 
+test("compact-delimiter only compacts separator row", async () => {
+  const input = `| Name  | Age | City |
+| ----- | --- | ---- |
+| Alice | 30  | NYC  |
+| Bob   | 25  | LA   |
+`;
+  const expected = `| Name  | Age | City |
+|-|-|-|
+| Alice | 30  | NYC  |
+| Bob   | 25  | LA   |
+`;
+  expect(await format(input, { tableLayout: "compact-delimiter" })).toBe(expected);
+});
+
+test("compact-delimiter preserves alignment markers", async () => {
+  const input = `| Name | Age | City |
+| :--- | :---: | ---: |
+| Alice | 30 | NYC |
+`;
+  const expected = `| Name  | Age | City |
+|:-|:-:|-:|
+| Alice | 30  | NYC  |
+`;
+  expect(await format(input, { tableLayout: "compact-delimiter" })).toBe(expected);
+});
+
 test("alignment markers in compact mode", async () => {
   const input = `| Name | Age | City |
 | :--- | :---: | ---: |
